@@ -1,0 +1,261 @@
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+.header h1 {
+  font-weight: 400;
+  color: white;
+  padding: 2%;
+  font-size: 25px;
+}
+
+.main h1 {
+  font-size: 40px;
+  font-weight: 400;
+  margin: 2% 2% 2% 0;
+}
+
+.header {
+  width: 100vw;
+  height: fit-content;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(31, 31, 84);
+  border-bottom: 4px solid gray;
+}
+
+.navbar-list {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+
+.navbar-link:link,
+.navbar-link:visited {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  transition: all 0.3s;
+}
+
+.navbar-link:hover,
+.navbar-link:active {
+  color: gray;
+}
+
+.mobile-nav-icon {
+  width: 1rem;
+  height: 4rem;
+}
+
+.mobile-navbar-btn {
+  display: none;
+  background: transparent;
+  cursor: pointer;
+  color: white;
+}
+
+.mobile-nav-icon[name="close-outline"] {
+  display: none;
+
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  margin-bottom: 4%;
+}
+
+  body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+  }
+
+  .donation-section {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #b73b32;
+    margin-bottom: 20px;
+}
+
+.donation-details {
+    text-align: left;
+}
+
+.donation-details h3 {
+    font-size: 1.5rem;
+    color: #b73b32;
+    margin-top: 20px;
+}
+
+.donation-details ul {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.donation-details li {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.qr-code {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.qr-code img {
+    width: 250px; /* Set both QR codes to the same size */
+    height: 250px; /* Set both QR codes to the same size */
+    border: 2px solid #b73b32;
+    border-radius: 5px;
+}
+
+.qr-code p {
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+.after-payment {
+    font-size: 1.1rem;
+    margin-top: 30px;
+}
+
+.after-payment a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.after-payment a:hover {
+    text-decoration: underline;
+}
+
+.whatsapp-group {
+    margin-top: 20px; /* Added spacing for clarity */
+    text-align: center; /* Center align the WhatsApp group section */
+}
+
+.footer {
+  width: 100vw;
+  background-color: lightgray;
+  text-align: center;
+  height: fit-content;
+  margin-top: auto;
+}
+
+.footer p {
+  text-align: center;
+  padding: 5%;
+}
+
+@media(max-width:62em) {
+  .mobile-navbar-btn {
+    display: block;
+    z-index: 999;
+
+  }
+
+  .header {
+    position: relative;
+  }
+
+  .header h2 {
+    width: 40%;
+  }
+
+  .navbar {
+    width: 40%;
+    height: fit-content;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    left: 60%;
+    padding: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(100%);
+    transition: all 0.4s linear;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    border: 1px solid lightgray;
+  }
+
+  .navbar-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding-bottom: 3%;
+    padding-top: 3%;
+  }
+
+  .active .navbar {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    z-index: 1;
+  }
+
+  .active .mobile-navbar-btn .mobile-nav-icon[name="close-outline"] {
+    display: block;
+    margin-bottom: 5%;
+  }
+
+  .active .mobile-navbar-btn .mobile-nav-icon[name="menu-outline"] {
+    display: none;
+  }
+}
+
+@media(max-width:35em) {
+  .header {
+    padding: 0 1rem;
+  }
+
+  .header h1 {
+    font-size: 20px;
+  }
+
+  /* .mobile-navbar-btn .mobile-nav-icon[name="menu-outline"] {
+    display: block;
+    position: absolute;
+    top: -8%;
+    left: 90%;
+  } */
+
+  .active .mobile-navbar-btn .mobile-nav-icon[name="close-outline"] {
+    display: block;
+    margin-bottom: 5%;
+    position: absolute;
+    top: -7%;
+    left: 90%;
+  }
+}
