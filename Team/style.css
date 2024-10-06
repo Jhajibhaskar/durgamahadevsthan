@@ -87,14 +87,54 @@ body {
 }
 
 .team-card, .web-team-card {
-  background-color: white;
+  background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 15px;
-  width: 203px; /* Adjusted width for title */
+  width: 203px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
   transition: transform 0.2s;
 }
+
+.team-card img, .web-team-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.team-card:hover, .web-team-card:hover {
+  transform: scale(1.05);
+}
+
+.web-team-card h4 {
+  margin-top: 10px;
+}
+
+.web-team-card p {
+  font-size: 15px;
+  margin: 5px 0;
+  color: #555;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.social-icons .social-icon {
+  font-size: 20px;
+  color: #555;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.social-icons .social-icon:hover {
+  color: #007bff; /* You can change this color to your preferred hover effect */
+  transform: scale(1.2);
+}
+
 
 .members-card {
   width: 100%; /* Take full width */
@@ -114,16 +154,6 @@ body {
   padding: 10px;
   width: 150px; /* Width for each member */
   text-align: center;
-}
-
-.team-card img, .web-team-card img, .member img {
-  width: 100%;
-  height: auto;
-  border-radius: 50%;
-}
-
-.team-card:hover, .web-team-card:hover, .member:hover {
-  transform: scale(1.05);
 }
 
 h3 {

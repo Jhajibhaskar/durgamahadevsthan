@@ -122,18 +122,32 @@ body {
 }
 
 .main {
-  width: 65%;             /* Set the width of the main content area */
-  padding-left: 2%;     /* Padding on the left side */
-  padding-top: 0.5%;       /* Padding on the top */
-  float: left;           /* Float the main content to the left */
+  width: 65%;
+  padding-left: 1%;
+  padding-right: 1%;
+  padding-top: 0.5%;
+  float: left;
+}
+
+.main_card {
+  background-color: #f9f9f9;  /* Light background for the card */
+  border: 1px solid #ccc;      /* Border for the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Add subtle shadow */
+  padding: 20px;              /* Padding inside the card */
+  border-radius: 8px;          /* Rounded corners */
+  margin-bottom: 20px;         /* Space below the card */
+  width: 100%;                 /* Full width for the card */
+  height: auto;                /* Let the height adjust automatically */
+  overflow: hidden;            /* Prevent content from overflowing */
 }
 
 .news {
+  background-color: #f9f9f9;
   width: 25%;
   border: 1px solid lightgray;
   padding: 15px;
   float: right;
-  margin-top: 2%;
+  margin-top: 0.5%;
   max-height: fit-content;
   border-radius: 10px;
   border-top: 3px solid lightgray;
@@ -191,6 +205,7 @@ iframe {
 }
 
 .card {
+  background-color: #f9f9f9;
   border: 1px solid lightgray;           /* Border for cards */
   border-radius: 10px;                   /* Rounded corners */
   padding: 15px;                         /* Padding inside the card */

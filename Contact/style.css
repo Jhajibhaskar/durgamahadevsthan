@@ -94,7 +94,8 @@ html {
 .contact-card, .office-details {
     width: 300px; /* Smaller width for contact card */
     margin: 20px auto;
-    background-color: #fff;
+    background-color: #f9f9f9;
+    border: 1px solid lightgray;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
@@ -148,6 +149,7 @@ html {
 iframe {
     width: 90%;
     border-radius: 8px;
+    border: 1px solid lightgray;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
@@ -159,6 +161,7 @@ iframe {
 
 .transport-card {
     background-color: #eaf1ff;
+    border: 1px solid lightgray;
     border-radius: 8px;
     padding: 20px;
     width: 250px;
