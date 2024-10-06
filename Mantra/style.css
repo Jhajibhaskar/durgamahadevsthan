@@ -1,0 +1,258 @@
+* {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+.header h1 {
+  font-weight: 400;
+  color: white;
+  padding: 2%;
+  font-size: 25px;
+}
+
+.header {
+  width: 100vw;
+  padding: 0 2rem;
+  height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(31, 31, 84);
+  border-bottom: 4px solid gray;
+}
+
+.navbar-list {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.navbar-link:link,
+.navbar-link:visited {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white;
+  transition: all 0.3s;
+}
+
+.navbar-link:hover,
+.navbar-link:active {
+  color: gray;
+}
+
+.mobile-nav-icon {
+  width: 1.5rem;
+  height: 4rem;
+}
+
+.mobile-navbar-btn {
+  display: none;
+  background: transparent;
+  cursor: pointer;
+  color: white;
+}
+
+.mobile-nav-icon[name="close-outline"] {
+  display: none;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.mantra-section {
+  padding: 20px;
+  text-align: center;
+}
+
+.mantra-heading {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+  border-bottom: 3px solid #000;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+.mantra-card {
+  width: 800px; /* Default width for larger screens */
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mantra-card h3 {
+  font-size: 22px;
+  color: #444;
+  margin-bottom: 5px;
+}
+
+.celebration-month {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.puja-image {
+  width: 80%; /* Set width to a percentage for responsiveness */
+  max-width: 200px; /* Maximum width for larger screens */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+
+.mantra-text {
+  font-size: 18px;
+  color: #222;
+  font-style: italic;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 8px;
+}
+
+.more-details {
+  margin-top: 10px;
+}
+
+.more-details a {
+  text-decoration: none;
+  font-size: 16px;
+  color: #007bff;
+}
+
+.more-details a:hover {
+  text-decoration: underline;
+}
+
+.footer {
+  width: 100vw;
+  background-color: lightgray;
+  text-align: center;
+  height: fit-content;
+  margin-top: auto;
+}
+
+.footer p {
+  text-align: center;
+  padding: 5%;
+}
+
+/* Media Queries for Mobile Responsiveness */
+@media (max-width: 62em) {
+  .mobile-navbar-btn {
+      display: block;
+      z-index: 999;
+  }
+
+  .header {
+      position: relative;
+  }
+
+  .header h2 {
+      width: 40%;
+  }
+
+  .navbar {
+      width: 40%;
+      height: fit-content;
+      background-color: black;
+      position: absolute;
+      top: 0;
+      left: 60%;
+      padding: 2%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: translateX(100%);
+      transition: all 0.4s linear;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      border: 1px solid lightgray;
+  }
+
+  .navbar-list {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding-bottom: 3%;
+      padding-top: 3%;
+  }
+
+  .active .navbar {
+      transform: translateX(0);
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      z-index: 1;
+  }
+
+  .active .mobile-navbar-btn .mobile-nav-icon[name="close-outline"] {
+      display: block;
+      margin-bottom: 5%;
+  }
+
+  .active .mobile-navbar-btn .mobile-nav-icon[name="menu-outline"] {
+      display: none;
+  }
+
+  .mantra-card {
+      width: 90%; /* Adjust the width for smaller screens */
+  }
+
+  .mantra-heading {
+      font-size: 24px; /* Adjust heading size */
+  }
+
+  .mantra-card h3 {
+      font-size: 20px; /* Adjust card heading size */
+  }
+
+  .mantra-text {
+      font-size: 16px; /* Adjust mantra text size */
+  }
+
+  .celebration-month {
+      font-size: 14px; /* Adjust celebration month text size */
+  }
+
+  .more-details a {
+      font-size: 14px; /* Adjust link size */
+  }
+}
+
+@media (max-width: 35em) {
+  .header {
+      padding: 0 1rem;
+  }
+
+  .header h1 {
+      font-size: 20px;
+  }
+
+  .active .mobile-navbar-btn .mobile-nav-icon[name="close-outline"] {
+      display: block;
+      margin-bottom: 5%;
+      position: absolute;
+      top: -7%;
+      left: 90%;
+  }
+}
