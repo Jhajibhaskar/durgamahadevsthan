@@ -42,6 +42,12 @@ html {
   border-bottom: 4px solid gray;
 }
 
+#logo {
+  width: 90px;   
+  height: 90px;
+  object-fit: cover;
+}
+
 .navbar-list {
   display: flex;
   gap: 2rem;

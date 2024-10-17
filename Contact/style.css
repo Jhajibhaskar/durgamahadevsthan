@@ -27,6 +27,12 @@ html {
     background-color: rgb(31, 31, 84);
     border-bottom: 4px solid gray;
   }
+
+  #logo {
+    width: 90px;   
+    height: 90px;
+    object-fit: cover;
+  }
   
   .navbar-list {
     display: flex;
