@@ -15,91 +15,111 @@
   <meta property="og:type" content="website" />
 
   <link rel="icon" type="image/x-icon" href="../Home/images/favicon.ico">
-  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <header class="header">
-    <a href="../Home/index.html" target="_blank"><img src="images/logo.jpg" alt="Temple Logo" id="logo" class="m-3"></a>
-    <h1><a href="../Home/index.html" target="_self" style="color: white; text-decoration: none;">दुर्गा महादेव स्थान , हुलास</a></h1>
-    <nav class="navbar">
-      <ul class="navbar-list">
+  <!-- decorative floating petals (motion) -->
+  <div class="petal-field" aria-hidden="true">
+    <span class="petal">🌼</span>
+    <span class="petal">🌸</span>
+    <span class="petal">🌼</span>
+    <span class="petal">🌸</span>
+    <span class="petal">🌼</span>
+  </div>
 
-        <li><a class="navbar-link" href="../Home/index.html">Home</a></li>
-        <li><a class="navbar-link" href="../Festivals/index.html">Festivals</a></li>
-        <li><a class="navbar-link" href="../Gallery/index.html">Gallery</a></li>
-        <li><a class="navbar-link" href="../Mantra/index.html">Puja Mantra</a></li>
-        <li><a class="navbar-link" href="../Team/index.html">Team</a></li>
-        <li><a class="navbar-link" href="../Donations/index.html">Donations</a></li>
-        <li><a class="navbar-link" href="../Contact/index.html">Contact</a></li>
-      </ul>
-    </nav>
-    <div class="mobile-navbar-btn">
-      <ion-icon name="menu-outline" class="mobile-nav-icon"></ion-icon>
-      <ion-icon name="close-outline" class="mobile-nav-icon"></ion-icon>
+  <header class="header" id="top">
+    <div class="header-inner">
+      <a href="../Home/index.html" target="_blank" class="brand">
+        <img src="images/logo.jpg" alt="Temple Logo" id="logo" class="m-3">
+        <h1><a href="../Home/index.html" target="_self">दुर्गा महादेव स्थान<span class="brand-sep">,</span> हुलास</a></h1>
+      </a>
+
+      <div class="mobile-navbar-btn">
+        <ion-icon name="menu-outline" class="mobile-nav-icon"></ion-icon>
+        <ion-icon name="close-outline" class="mobile-nav-icon"></ion-icon>
+      </div>
+
+      <nav class="navbar">
+        <ul class="navbar-list">
+          <li><a class="navbar-link" href="../Home/index.html">Home</a></li>
+          <li><a class="navbar-link" href="../Festivals/index.html">Festivals</a></li>
+          <li><a class="navbar-link" href="../Gallery/index.html">Gallery</a></li>
+          <li><a class="navbar-link is-active" href="../Mantra/index.html">Puja Mantra</a></li>
+          <li><a class="navbar-link" href="../Team/index.html">Team</a></li>
+          <li><a class="navbar-link navbar-link-cta" href="../Donations/index.html">Donations</a></li>
+          <li><a class="navbar-link" href="../Contact/index.html">Contact</a></li>
+        </ul>
+      </nav>
     </div>
+    <div class="toran" aria-hidden="true"></div>
   </header>
 
   <!-- Mantra Section -->
   <section class="mantra-section">
-    <h2 class="mantra-heading">Puja Mantra</h2>
+    <h2 class="mantra-heading" data-reveal><span class="section-icon">📿</span> Puja Mantra</h2>
 
-    <div class="mantra-card">
-        <h3>चौरचन पूजा मंत्र</h3>
-        <p class="celebration-month">Celebration Month: भाद्रपद(भादो) मासक शुक्ल पक्ष केर चतुर्थी तिथिकेँ</p>
-        <img src="images/chaurchan.jpg" alt="chaurchan" class="puja-image">
-        <p class="mantra-text"><strong> चन्द्रमा प्रणाम मंत्र :</strong><br>
-          'दधि-शंख-तुषाराभं, क्षीरोदार्णव-संभवम्‌।<br>
-          नमामि शशिनं भक्त्या, शंभोर्मुकुट भूषणम्‌।।'<br><br>
-          
-          <strong> चौरचन पूजा मंत्र :</strong><br>
-          सिंह: प्रसेनवमवधीत सिंहो जाम्बवताहत:।<br>
-          सुकुमारक मा रोदीस्तव ह्येष स्यमन्तकः ।</p>
-        <p class="more-details"><a href="https://apangaamapanbat.blogspot.com/2021/09/blog-post.html" target="_blank">For more details about Puja Vidhi, click here</a></p>
+    <div class="mantra-card" data-reveal>
+      <h3>चौरचन पूजा मंत्र</h3>
+      <p class="celebration-month">Celebration Month: भाद्रपद(भादो) मासक शुक्ल पक्ष केर चतुर्थी तिथिकेँ</p>
+      <img src="images/chaurchan.jpg" alt="chaurchan" class="puja-image">
+      <p class="mantra-text"><strong>चन्द्रमा प्रणाम मंत्र :</strong><br>
+        'दधि-शंख-तुषाराभं, क्षीरोदार्णव-संभवम्‌।<br>
+        नमामि शशिनं भक्त्या, शंभोर्मुकुट भूषणम्‌।।'<br><br>
+
+        <strong>चौरचन पूजा मंत्र :</strong><br>
+        सिंह: प्रसेनवमवधीत सिंहो जाम्बवताहत:।<br>
+        सुकुमारक मा रोदीस्तव ह्येष स्यमन्तकः ।</p>
+      <p class="more-details"><a href="https://apangaamapanbat.blogspot.com/2021/09/blog-post.html" target="_blank">For more details about Puja Vidhi, click here</a></p>
     </div>
 
-    <div class="mantra-card">
-        <h3>जनेऊ(यज्ञोपवीत) मंत्र</h3>
-        
-        <img src="images/janeu.jpg" alt="Janeu" class="puja-image">
-        <p class="mantra-text"><strong> वाजसनेयी यज्ञोपवीत धारण मंत्र :</strong><br>
-          ॐ यज्ञोपवीतं परमं पवित्रं प्रजापतेर्यत्सहजं पुरस्तात्।<br>
-          आयुष्यमग्रं प्रतिमुंच शुभ्रं यज्ञोपवीतं बलमस्तु तेजः।।<br><br>
-          
-          <strong> छन्दोग यज्ञोपवीत धारण मंत्र :</strong><br>
-          ॐ यज्ञोपवीतमसि यज्ञस्य त्वोपवीतेनोपनह्मामि।</p><br><br>
+    <div class="mantra-card" data-reveal>
+      <h3>जनेऊ(यज्ञोपवीत) मंत्र</h3>
+      <img src="images/janeu.jpg" alt="Janeu" class="puja-image">
+      <p class="mantra-text"><strong>वाजसनेयी यज्ञोपवीत धारण मंत्र :</strong><br>
+        ॐ यज्ञोपवीतं परमं पवित्रं प्रजापतेर्यत्सहजं पुरस्तात्।<br>
+        आयुष्यमग्रं प्रतिमुंच शुभ्रं यज्ञोपवीतं बलमस्तु तेजः।।<br><br>
 
-          <strong> यज्ञोपवीत उतारने का मंत्र :</strong><br>
-          ॐ एतावद्दिनपर्यन्तं ब्रह्म त्वं धारितं मया।<br>
-          जीर्णत्वात्तवत्परित्यागो गच्छ सूत्र यथासुखम्।।</p>
-        <p class="more-details"><a href="https://mithiladharohar.blogspot.com/2021/05/janeu-mantra.html" target="_blank">For more details, click here</a></p>
+        <strong>छन्दोग यज्ञोपवीत धारण मंत्र :</strong><br>
+        ॐ यज्ञोपवीतमसि यज्ञस्य त्वोपवीतेनोपनह्मामि।<br><br>
+
+        <strong>यज्ञोपवीत उतारने का मंत्र :</strong><br>
+        ॐ एतावद्दिनपर्यन्तं ब्रह्म त्वं धारितं मया।<br>
+        जीर्णत्वात्तवत्परित्यागो गच्छ सूत्र यथासुखम्।।</p>
+      <p class="more-details"><a href="https://mithiladharohar.blogspot.com/2021/05/janeu-mantra.html" target="_blank">For more details, click here</a></p>
     </div>
 
-    <div class="mantra-card">
-        <h3>उक्का-पाती मंत्र</h3>
-        <p class="celebration-month">Celebration Day: दिवाली के सांझ</p>
-        <img src="images/ukka-paati.jpg" alt="Ukka Paati" class="puja-image">
-        <p class="mantra-text">शास्त्राशस्त्रहतानांच भूतानांभूत दर्शयोः। <br> उज्ज्वल ज्योतिषा देहं निदहेव्योमवह्निना॥ <br> अग्निदग्धाश्व ये जीवा येऽदयद्ग्धाः कुले मम। <br> उज्ज्वलज्योतिषा दग्धास्ते यान्तु परमाङ्गतिम्‌‌॥ <br> यमलोकं परित्यज्य आगता महालये। <br> उज्ज्वलज्योतिषा वत्मं पश्यन्तो व्रजन्तुते॥
-          </p>
-        <p class="more-details"><a href="https://mithiladharohar.blogspot.com/2021/10/hukka-loli-tradition.html" target="_blank">For more details, click here</a></p>
+    <div class="mantra-card" data-reveal>
+      <h3>उक्का-पाती मंत्र</h3>
+      <p class="celebration-month">Celebration Day: दिवाली के सांझ</p>
+      <img src="images/ukka-paati.jpg" alt="Ukka Paati" class="puja-image">
+      <p class="mantra-text">शास्त्राशस्त्रहतानांच भूतानांभूत दर्शयोः। <br> उज्ज्वल ज्योतिषा देहं निदहेव्योमवह्निना॥ <br> अग्निदग्धाश्व ये जीवा येऽदयद्ग्धाः कुले मम। <br> उज्ज्वलज्योतिषा दग्धास्ते यान्तु परमाङ्गतिम्‌‌॥ <br> यमलोकं परित्यज्य आगता महालये। <br> उज्ज्वलज्योतिषा वत्मं पश्यन्तो व्रजन्तुते॥</p>
+      <p class="more-details"><a href="https://mithiladharohar.blogspot.com/2021/10/hukka-loli-tradition.html" target="_blank">For more details, click here</a></p>
     </div>
 
-    <div class="mantra-card">
+    <div class="mantra-card" data-reveal>
       <h3>भरदुतिया मंत्र</h3>
       <p class="celebration-month">Celebration Day: दीवाली कऽ दू दिन बाद(कार्तिक मासक शुक्ल पक्ष केर द्वितीया तिथिकेँ)</p>
       <img src="images/Bhardutiya.jpg" alt="Bhardutiya" class="puja-image">
       <p class="mantra-text">गंगा नोतय छैथ यमुना के, हम नोतय छी (भाई के नाम ) भाई के. जहिना जहिना गंगा-यमुना के धार बहय,हमर भाय सबहक औरदा बढ़य"</p>
       <p class="more-details"><a href="https://mithiladharohar.blogspot.com/2015/11/bhardutiya.html" target="_blank">For more details, click here</a></p>
-  </div>
+    </div>
   </section>
 
   <!-- FOOTER -->
-
   <footer class="footer">
-    <p>© 2025 Developed by <a href="https://www.linkedin.com/in/jhajibhaskar/" target="_blank">jhajibhaskar</a>. All rights reserved.</p>
+    <p>© <span id="year"></span> Developed by <a href="https://www.linkedin.com/in/jhajibhaskar/" target="_blank">jhajibhaskar</a>. All rights reserved.</p>
   </footer>
+
+  <a href="#top" class="top" aria-label="Scroll to top">↑</a>
+
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <script src="../Mantra/script.js"></script>
