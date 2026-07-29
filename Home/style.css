@@ -304,3 +304,18 @@ a{ color:inherit; }
   .main_card{ padding:1.8rem; }
   .slider-arrow{ width:3.2rem; height:3.2rem; font-size:1.1rem; }
 }
+
+/* ============================================================
+   Cross-device hardening (defensive rules)
+   ============================================================ */
+img, iframe, video{ max-width:100%; }
+body{ overflow-wrap:break-word; word-break:break-word; }
+a, button{ -webkit-tap-highlight-color:transparent; }
+
+@media (max-width:840px){
+  .dot{ width:1.3rem; height:1.3rem; }
+}
+
+@media (max-width:400px){
+  html{ font-size:15px; }
+}
