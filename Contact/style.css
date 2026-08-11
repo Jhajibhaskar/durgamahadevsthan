@@ -123,7 +123,7 @@ a{ color:inherit; }
 /* ============================================================
    Contact section
    ============================================================ */
-#contact{ max-width:var(--max); margin:0 auto; padding:3.5rem 2rem 5rem; }
+#contact{ width:100%; max-width:var(--max); margin:0 auto; padding:3.5rem 2rem 5rem; }
 
 .bold-header{
   text-align:center; font-family:var(--font-display); font-weight:700; color:var(--gold);
@@ -232,6 +232,25 @@ a{ color:inherit; }
 }
 
 @media (max-width:520px){
+
+  #contact{
+    width:100%;
+    max-width:100%;
+    padding:2.5rem 1rem 4rem;
+  }
+
+  .contact-card,
+  .office-details,
+  .contact-grid{
+    width:100%;
+    min-width:0;
+  }
+
+  .contact-card,
+  .office-details{
+    padding:1.8rem 1rem;
+  }
+
   .header-inner{ padding:1rem 1.2rem; }
   .header h1{ font-size:1.25rem; }
   #logo{ width:4.4rem; height:4.4rem; }

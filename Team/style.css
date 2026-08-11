@@ -123,7 +123,7 @@ a{ color:inherit; }
 /* ============================================================
    Team section
    ============================================================ */
-.our-team{ max-width:var(--max); margin:0 auto; padding:3.5rem 2rem 5rem; text-align:center; }
+.our-team{ width:100%; max-width:var(--max); margin:0 auto; padding:3.5rem 2rem 5rem; text-align:center; }
 
 .our-team h2{
   font-family:var(--font-display); font-weight:700; color:var(--gold);
