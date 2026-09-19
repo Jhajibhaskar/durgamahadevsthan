@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#130a06">
+  <title>Admin Login - Durga Mahadev Sthan, Hulas</title>
+  <link rel="icon" type="image/x-icon" href="../images/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="petal-field" aria-hidden="true">
+    <span>🌼</span><span>🌸</span><span>🌼</span><span>🌸</span><span>🌼</span>
+  </div>
+
+  <header class="admin-header">
+    <div class="admin-header-inner">
+      <a class="brand" href="../index.html">
+        <img src="../images/logo.jpg" alt="Temple Logo">
+        <div>
+          <div class="brand-kicker">DURGA MAHADEV STHAN</div>
+          <div class="brand-title">हुलास · Temple Admin</div>
+        </div>
+      </a>
+      <a class="back-site" href="../index.html">← Donation Page</a>
+    </div>
+  </header>
+
+  <main class="admin-shell">
+    <section class="admin-card" id="admin-login-card">
+      <div class="admin-title-row">
+        <div class="temple-icon">🛕</div>
+        <div>
+          <div class="kicker">AUTHORIZED ACCESS</div>
+          <h1>Admin Login</h1>
+          <p>Use the temple administrator email and password.</p>
+        </div>
+      </div>
+      <div class="alert" id="login-alert" aria-live="polite"></div>
+      <form id="admin-login-form" class="form-grid">
+        <label>
+          <span>Email *</span>
+          <input id="admin-email" type="email" autocomplete="username" placeholder="admin@example.com" required>
+        </label>
+        <label>
+          <span>Password *</span>
+          <input id="admin-password" type="password" autocomplete="current-password" placeholder="Admin password" required>
+        </label>
+        <button class="primary-btn wide" type="submit">Login as Admin</button>
+      </form>
+    </section>
+
+    <section class="dashboard" id="admin-dashboard" hidden>
+      <div class="dash-top">
+        <div>
+          <div class="kicker">DURGA MAHADEV STHAN · HULAS</div>
+          <h1>Admin Dashboard</h1>
+          <p>Manage donor records, yearly donations, verification and payment proofs.</p>
+        </div>
+        <button class="secondary-btn" id="admin-logout">Logout</button>
+      </div>
+
+      <div class="alert" id="dash-alert" aria-live="polite"></div>
+
+      <div class="stat-grid" id="stats-grid">
+        <div class="stat-card"><span>Registered Donors</span><strong id="stat-donors">0</strong></div>
+        <div class="stat-card"><span>Verified Donations</span><strong id="stat-verified">₹0.00</strong></div>
+        <div class="stat-card"><span>Pending Donations</span><strong id="stat-pending">₹0.00</strong></div>
+        <div class="stat-card"><span>Pending Records</span><strong id="stat-pending-count">0</strong></div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="donors-tab">Donors</button>
+        <button class="tab" data-tab="donations-tab">Donations</button>
+      </div>
+
+      <section class="tab-panel active" id="donors-tab">
+        <div class="toolbar">
+          <div>
+            <h2>All Donors</h2>
+            <p>Admin has full view, edit, update and delete access.</p>
+          </div>
+          <div class="toolbar-controls">
+            <input id="donor-search" type="search" placeholder="Search name, mobile, village...">
+            <button class="primary-btn" id="add-donor-btn">＋ Add Donor</button>
+            <button class="secondary-btn" id="refresh-donors">Refresh</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>Mobile</th><th>Full Name</th><th>Father's Name</th><th>DOB</th><th>Village / Address</th><th>City</th><th>State</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="donors-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="tab-panel" id="donations-tab" hidden>
+        <div class="toolbar">
+          <div>
+            <h2>All Donations</h2>
+            <p>Yearly donation sheets are detected automatically.</p>
+          </div>
+          <div class="toolbar-controls">
+            <select id="donation-year-filter"><option value="">All Years</option></select>
+            <select id="donation-status-filter">
+              <option value="">All Status</option><option value="Pending">Pending</option><option value="Verified">Verified</option><option value="Rejected">Rejected</option>
+            </select>
+            <input id="donation-search" type="search" placeholder="Search mobile, name, UPI ID...">
+            <button class="primary-btn" id="add-donation-btn">＋ Add Donation</button>
+            <button class="secondary-btn" id="refresh-donations">Refresh</button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th>Year</th><th>Mobile</th><th>Name</th><th>Amount</th><th>UPI Transaction ID</th><th>App</th><th>Status</th><th>Submitted</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="donations-tbody"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="admin-footer">
+    <p>© <span id="admin-year"></span> Developed by <a href="https://www.linkedin.com/in/jhajibhaskar/" target="_blank" rel="noopener noreferrer">jhajibhaskar</a>. All rights reserved.</p>
+  </footer>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="modal-close" id="modal-close" aria-label="Close">×</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

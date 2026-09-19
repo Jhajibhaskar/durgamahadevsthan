@@ -13,7 +13,7 @@
     <meta property="og:url" content="https://www.durgamahadevsthan.com" />
     <meta property="og:type" content="website" />
 
-    <link rel="icon" type="image/x-icon" href="../Home/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="images/logo.jpg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +23,6 @@
 </head>
 <body>
 
-  <!-- decorative floating petals (motion) -->
   <div class="petal-field" aria-hidden="true">
     <span class="petal">🌼</span>
     <span class="petal">🌸</span>
@@ -34,12 +33,12 @@
 
   <header class="header" id="top">
     <div class="header-inner">
-      <a href="../Home/index.html" target="_blank" class="brand">
+      <a href="../Home/index.html" class="brand" aria-label="Durga Mahadev Sthan, Hulas home">
         <img src="images/logo.jpg" alt="Temple Logo" id="logo" class="m-3">
-        <h1><a href="../Home/index.html" target="_self">दुर्गा महादेव स्थान<span class="brand-sep">,</span> हुलास</a></h1>
+        <h1>दुर्गा महादेव स्थान<span class="brand-sep">,</span> हुलास</h1>
       </a>
 
-      <div class="mobile-navbar-btn">
+      <div class="mobile-navbar-btn" role="button" tabindex="0" aria-label="Open navigation" aria-expanded="false">
         <ion-icon name="menu-outline" class="mobile-nav-icon"></ion-icon>
         <ion-icon name="close-outline" class="mobile-nav-icon"></ion-icon>
       </div>
@@ -51,7 +50,7 @@
           <li><a class="navbar-link" href="../Gallery/index.html">Gallery</a></li>
           <li><a class="navbar-link" href="../Mantra/index.html">Puja Mantra</a></li>
           <li><a class="navbar-link" href="../Team/index.html">Team</a></li>
-          <li><a class="navbar-link navbar-link-cta is-active" href="../Donations/index.html">Donations</a></li>
+          <li><a class="navbar-link navbar-link-cta is-active" href="index.html">Donations</a></li>
           <li><a class="navbar-link" href="../Contact/index.html">Contact</a></li>
         </ul>
       </nav>
@@ -62,6 +61,27 @@
   <section class="donation-hero" data-reveal>
     <h2><span class="hero-icon">🙏</span> Donate to दुर्गा महादेव स्थान, हुलास</h2>
     <p class="donation-hero-note">Your seva helps keep the daily aarti, festivals and upkeep of the mandir going. Every contribution, big or small, is gratefully received.</p>
+
+    <!-- Online donation entry point requested for the new donor portal -->
+    <div class="online-donation-entry" data-reveal>
+      <div class="online-entry-icon" aria-hidden="true">💝</div>
+      <div class="online-entry-content">
+        <h3>Donate Online</h3>
+        <p>Submit your donation, keep your donation history, and view your donation receipt anytime.</p>
+      </div>
+
+      <div class="online-entry-actions">
+        <div class="entry-action-group">
+          <span class="entry-question">Already Registered?</span>
+          <button type="button" class="online-btn primary-btn" id="open-login-btn">Login via Mobile Number</button>
+        </div>
+        <div class="entry-divider" aria-hidden="true"><span>OR</span></div>
+        <div class="entry-action-group">
+          <span class="entry-question">Not Registered?</span>
+          <button type="button" class="online-btn secondary-btn" id="open-register-btn">Register Now</button>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="donation-section">
@@ -91,15 +111,15 @@
       <div class="donation-card donation-card-wide" data-reveal>
         <h3><span class="card-icon">✅</span> After Your Payment</h3>
         <p class="after-payment">
-          After completing the payment, please send the payment proof with your name to any one of the admins of our <a href="https://chat.whatsapp.com/FbhHQWe2yKcDsaUx56t0Si" target="_blank" class="inline-link">WhatsApp Group</a> for confirmation. Thank you<br><br>
-          भुगतान पूरा करने के बाद, पुष्टि के लिए कृपया भुगतान प्रमाण अपने नाम के साथ हमारे <a href="https://chat.whatsapp.com/FbhHQWe2yKcDsaUx56t0Si" target="_blank" class="inline-link">व्हाट्सएप ग्रुप</a> के किसी एक एडमिन को भेजें धन्यवाद।
+          After completing the payment, please send the payment proof with your name to any one of the admins of our <a href="https://chat.whatsapp.com/FbhHQWe2yKcDsaUx56t0Si" target="_blank" rel="noopener noreferrer" class="inline-link">WhatsApp Group</a> for confirmation. Thank you<br><br>
+          भुगतान पूरा करने के बाद, पुष्टि के लिए कृपया भुगतान प्रमाण अपने नाम के साथ हमारे <a href="https://chat.whatsapp.com/FbhHQWe2yKcDsaUx56t0Si" target="_blank" rel="noopener noreferrer" class="inline-link">व्हाट्सएप ग्रुप</a> के किसी एक एडमिन को भेजें धन्यवाद।
         </p>
       </div>
 
       <div class="donation-card donation-card-wide whatsapp-group" data-reveal>
         <h3><span class="card-icon">💬</span> WhatsApp Group Link</h3>
         <p>
-          <a href="https://chat.whatsapp.com/FbhHQWe2yKcDsaUx56t0Si" target="_blank" class="whatsapp-cta">Click to Join Temple WhatsApp Group</a>
+          <a href="https://chat.whatsapp.com/FbhHQWe2yKcDsaUx56t0Si" target="_blank" rel="noopener noreferrer" class="whatsapp-cta">Click to Join Temple WhatsApp Group</a>
         </p>
         <div class="qr-block">
           <img src="images/whatsapp.jpg" alt="WhatsApp Group QR Code" class="qr-code">
@@ -107,18 +127,364 @@
         </div>
       </div>
 
+      <!-- Admin access requested: kept below the WhatsApp Group section. -->
+      <div class="donation-card donation-card-wide admin-access-card" data-reveal>
+        <div class="admin-access-inner">
+          <div>
+            <span class="card-icon">🔐</span>
+            <h3>Temple Admin</h3>
+            <p>Authorized temple administrators can manage donors, donations, payment proofs and verification from the admin dashboard.</p>
+          </div>
+          <a href="./Admin/index.html" class="admin-login-cta">Login as Admin</a>
+        </div>
+      </div>
+
     </div>
   </section>
 
+  <!-- ==========================================================
+       Donor Portal Modal
+       Backend: Supabase Edge Function + Supabase Storage.
+       Supabase project settings are loaded from assets/js/config.js.
+       ========================================================== -->
+  <div class="portal-overlay" id="portal-overlay" aria-hidden="true">
+    <div class="portal-modal" role="dialog" aria-modal="true" aria-labelledby="portal-title">
+      <button type="button" class="portal-close" id="portal-close-btn" aria-label="Close">&times;</button>
+
+      <div class="portal-brand">
+        <div class="portal-brand-icon">🛕</div>
+        <div>
+          <p class="portal-kicker">DURGA MAHADEV STHAN</p>
+          <h2 id="portal-title">Online Donation</h2>
+          <p class="portal-subtitle">Hulas</p>
+        </div>
+      </div>
+
+      <div class="portal-alert" id="portal-alert" role="status" aria-live="polite"></div>
+
+      <!-- Login -->
+      <section class="portal-view" id="login-view" hidden>
+        <div class="portal-heading">
+          <span class="portal-heading-icon">🔐</span>
+          <div>
+            <h3>Donor Login</h3>
+            <p>Login using your registered mobile number and date of birth.</p>
+          </div>
+        </div>
+
+        <form class="portal-form" id="login-form" novalidate>
+          <div class="form-field">
+            <label for="login-mobile">Mobile Number <span>*</span></label>
+            <input id="login-mobile" name="mobile" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel" placeholder="10 digit mobile number" required>
+            <small>Enter the same 10-digit mobile number used during registration.</small>
+          </div>
+
+          <div class="form-field">
+            <label>Date of Birth <span>*</span></label>
+            <div class="dob-row" data-dob-group="login">
+              <input id="login-dob-day" type="text" inputmode="numeric" maxlength="2" placeholder="DD" aria-label="Day" required>
+              <span>-</span>
+              <input id="login-dob-month" type="text" inputmode="numeric" maxlength="2" placeholder="MM" aria-label="Month" required>
+              <span>-</span>
+              <input id="login-dob-year" type="text" inputmode="numeric" maxlength="4" placeholder="YYYY" aria-label="Year" required>
+              <button type="button" class="calendar-btn" data-calendar-target="login" aria-label="Choose date">📅</button>
+              <input class="hidden-date-input" id="login-dob-picker" type="date" tabindex="-1" aria-hidden="true">
+            </div>
+            <small>Format: DD - MM - YYYY</small>
+          </div>
+
+          <button type="submit" class="portal-submit-btn">Login</button>
+        </form>
+
+        <div class="portal-switch">
+          New donor? <button type="button" class="text-btn" data-switch-view="register">Register here</button>
+        </div>
+      </section>
+
+      <!-- Registration -->
+      <section class="portal-view" id="register-view" hidden>
+        <div class="portal-heading">
+          <span class="portal-heading-icon">📝</span>
+          <div>
+            <h3>New Donor Registration</h3>
+            <p>Register once. You can use the same account for donations in future years.</p>
+          </div>
+        </div>
+
+        <form class="portal-form" id="register-form" novalidate>
+          <div class="form-field">
+            <label for="register-name">Full Name <span>*</span></label>
+            <input id="register-name" name="fullName" type="text" maxlength="100" autocomplete="name" placeholder="As per Aadhaar" required>
+          </div>
+
+          <div class="form-field">
+            <label for="register-father">Father's Name <span>*</span></label>
+            <input id="register-father" name="fatherName" type="text" maxlength="100" placeholder="Father's full name" required>
+          </div>
+
+          <div class="form-field">
+            <label for="register-mobile">Mobile Number <span>*</span></label>
+            <input id="register-mobile" name="mobile" type="tel" inputmode="numeric" maxlength="10" autocomplete="tel" placeholder="10 digit mobile number" required>
+          </div>
+
+          <div class="form-field">
+            <label>Date of Birth <span>*</span></label>
+            <div class="dob-row" data-dob-group="register">
+              <input id="register-dob-day" type="text" inputmode="numeric" maxlength="2" placeholder="DD" aria-label="Day" required>
+              <span>-</span>
+              <input id="register-dob-month" type="text" inputmode="numeric" maxlength="2" placeholder="MM" aria-label="Month" required>
+              <span>-</span>
+              <input id="register-dob-year" type="text" inputmode="numeric" maxlength="4" placeholder="YYYY" aria-label="Year" required>
+              <button type="button" class="calendar-btn" data-calendar-target="register" aria-label="Choose date">📅</button>
+              <input class="hidden-date-input" id="register-dob-picker" type="date" tabindex="-1" aria-hidden="true">
+            </div>
+            <small>As per Aadhaar · Format: DD - MM - YYYY</small>
+          </div>
+
+          <div class="form-field form-field-wide">
+            <label for="register-address">Village / Complete Address <span>*</span></label>
+            <textarea id="register-address" name="address" maxlength="300" rows="3" placeholder="Village and complete address" required></textarea>
+          </div>
+
+          <div class="form-field">
+            <label for="register-city">Current City <span>*</span></label>
+            <input id="register-city" name="city" type="text" maxlength="80" autocomplete="address-level2" placeholder="Current city" required>
+          </div>
+
+          <div class="form-field">
+            <label for="register-state">State <span>*</span></label>
+            <select id="register-state" name="state" required>
+              <option value="">Select State</option>
+              <option>Andhra Pradesh</option>
+              <option>Arunachal Pradesh</option>
+              <option>Assam</option>
+              <option>Bihar</option>
+              <option>Chhattisgarh</option>
+              <option>Goa</option>
+              <option>Gujarat</option>
+              <option>Haryana</option>
+              <option>Himachal Pradesh</option>
+              <option>Jharkhand</option>
+              <option>Karnataka</option>
+              <option>Kerala</option>
+              <option>Madhya Pradesh</option>
+              <option>Maharashtra</option>
+              <option>Manipur</option>
+              <option>Meghalaya</option>
+              <option>Mizoram</option>
+              <option>Nagaland</option>
+              <option>Odisha</option>
+              <option>Punjab</option>
+              <option>Rajasthan</option>
+              <option>Sikkim</option>
+              <option>Tamil Nadu</option>
+              <option>Telangana</option>
+              <option>Tripura</option>
+              <option>Uttar Pradesh</option>
+              <option>Uttarakhand</option>
+              <option>West Bengal</option>
+              <option>Andaman and Nicobar Islands</option>
+              <option>Chandigarh</option>
+              <option>Dadra and Nagar Haveli and Daman and Diu</option>
+              <option>Delhi</option>
+              <option>Jammu and Kashmir</option>
+              <option>Ladakh</option>
+              <option>Lakshadweep</option>
+              <option>Puducherry</option>
+            </select>
+          </div>
+
+          <label class="checkbox-field">
+            <input id="register-confirm" type="checkbox" required>
+            <span>I confirm that the information provided above is correct.</span>
+          </label>
+
+          <button type="submit" class="portal-submit-btn">Register Donor</button>
+        </form>
+
+        <div class="portal-switch">
+          Already registered? <button type="button" class="text-btn" data-switch-view="login">Login here</button>
+        </div>
+      </section>
+
+      <!-- Donor dashboard -->
+      <section class="portal-view" id="dashboard-view" hidden>
+        <div class="dashboard-head">
+          <div>
+            <p class="portal-kicker">DONOR ACCOUNT</p>
+            <h3 id="dashboard-welcome">Welcome</h3>
+            <p class="dashboard-subtitle">Durga Mahadev Sthan, Hulas</p>
+          </div>
+          <button type="button" class="logout-btn" id="logout-btn">Logout</button>
+        </div>
+
+        <div class="summary-cards">
+          <div class="summary-card">
+            <span class="summary-label">Verified Donations</span>
+            <strong id="verified-total">₹0.00</strong>
+          </div>
+          <div class="summary-card pending-summary">
+            <span class="summary-label">Pending Donations</span>
+            <strong id="pending-total">₹0.00</strong>
+          </div>
+          <div class="summary-card">
+            <span class="summary-label">Total Submitted</span>
+            <strong id="submitted-total">₹0.00</strong>
+          </div>
+        </div>
+
+        <div class="dashboard-section">
+          <div class="section-heading-row">
+            <div>
+              <h4>My Registration Details</h4>
+              <p>These details can only be changed by the temple admin.</p>
+            </div>
+            <span class="read-only-badge">🔒 Read Only</span>
+          </div>
+          <div class="profile-grid" id="profile-grid"></div>
+        </div>
+
+        <div class="dashboard-section">
+          <div class="section-heading-row">
+            <div>
+              <h4>My Donations</h4>
+              <p>View every year's donation and open its receipt anytime.</p>
+            </div>
+            <button type="button" class="small-action-btn" id="open-donation-form-btn">＋ Make Donation</button>
+          </div>
+          <div class="donation-history" id="donation-history"></div>
+        </div>
+      </section>
+
+      <!-- Donation submission -->
+      <section class="portal-view" id="donation-view" hidden>
+        <div class="portal-heading">
+          <span class="portal-heading-icon">💝</span>
+          <div>
+            <h3 id="donation-year-title">Durga Puja Donation</h3>
+            <p>Submit your payment details and screenshot for verification.</p>
+          </div>
+        </div>
+
+        <div class="online-payment-qr-panel" data-reveal>
+          <div class="online-payment-qr-copy">
+            <span class="qr-panel-kicker">STEP 1 · MAKE PAYMENT</span>
+            <h4>Scan the Donation QR Code</h4>
+            <p>First complete your donation using any UPI app. After payment, enter the transaction details and upload the payment screenshot below.</p>
+            <div class="online-upi-id"><span>UPI ID</span><strong>boim-458013142205@boi</strong></div>
+          </div>
+          <div class="online-payment-qr-image">
+            <img src="images/qrcode.jpg" alt="Durga Mahadev Sthan donation UPI QR Code" class="online-qr-code">
+            <p>Scan with GPay, PhonePe, Paytm, BHIM or another UPI app.</p>
+          </div>
+        </div>
+
+        <div class="payment-details-kicker">STEP 2 · ENTER PAYMENT DETAILS</div>
+
+        <form class="portal-form" id="donation-form" novalidate>
+          <div class="form-field form-field-wide">
+            <label for="donation-amount">Donation Amount <span>*</span></label>
+            <div class="amount-input-wrap">
+              <span>₹</span>
+              <input id="donation-amount" type="number" min="1" step="0.01" inputmode="decimal" placeholder="100.00" required>
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label for="donation-txn">UPI Transaction ID <span>*</span></label>
+            <input id="donation-txn" type="text" maxlength="100" placeholder="Enter UPI transaction ID" required>
+          </div>
+
+          <div class="form-field">
+            <label for="donation-app">Payment App <span>*</span></label>
+            <select id="donation-app" required>
+              <option value="">Select App</option>
+              <option>GPay</option>
+              <option>PhonePe</option>
+              <option>Paytm</option>
+              <option>BHIM</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-field form-field-wide" id="other-app-field" hidden>
+            <label for="donation-other-app">Other App Name <span>*</span></label>
+            <input id="donation-other-app" type="text" maxlength="50" placeholder="Enter payment app name">
+          </div>
+
+          <div class="form-field form-field-wide">
+            <label for="donation-proof">Payment Screenshot / Proof <span>*</span></label>
+            <label class="file-drop" for="donation-proof">
+              <span class="file-drop-icon">📷</span>
+              <strong>Choose payment screenshot</strong>
+              <small>JPG, JPEG or PNG · Maximum 5 MB</small>
+              <span class="file-name" id="donation-proof-name">No file selected</span>
+            </label>
+            <input id="donation-proof" type="file" accept="image/jpeg,image/png" hidden required>
+          </div>
+
+          <div class="payment-upload-note">
+            <span>🔒</span>
+            <p>Your payment proof is stored securely in the temple's private Supabase Storage bucket.</p>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="secondary-form-btn" data-switch-view="dashboard">Cancel</button>
+            <button type="submit" class="portal-submit-btn">Submit Donation</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Receipt -->
+      <section class="portal-view" id="receipt-view" hidden>
+        <div class="receipt-toolbar">
+          <button type="button" class="back-btn" data-switch-view="dashboard">← Back to Donations</button>
+          <button type="button" class="small-action-btn" id="download-receipt-btn">⬇ Download Receipt</button>
+        </div>
+
+        <div class="receipt-card" id="receipt-card">
+          <div class="receipt-top-border"></div>
+          <div class="receipt-header">
+            <div class="receipt-temple-icon">🛕</div>
+            <p class="receipt-kicker">DURGA MAHADEV STHAN</p>
+            <h3>हुलास</h3>
+            <p class="receipt-title">DONATION RECEIPT</p>
+          </div>
+
+          <div class="receipt-thanks">
+            <p>🙏 Thank you for your generous contribution.</p>
+            <span>आपकी सेवा एवं सहयोग के लिए हार्दिक धन्यवाद।</span>
+          </div>
+
+          <div class="receipt-info-grid" id="receipt-info-grid"></div>
+
+          <div class="receipt-status-row">
+            <span>Verification Status</span>
+            <strong id="receipt-status">Pending</strong>
+          </div>
+
+          <div class="receipt-footer-message">
+            <p>May the blessings of Maa Durga and Mahadev always be with you and your family.</p>
+            <strong>Durga Mahadev Sthan, Hulas</strong>
+          </div>
+          <div class="receipt-bottom-border"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
   <footer class="footer">
-    <p>© <span id="year"></span> Developed by <a href="https://www.linkedin.com/in/jhajibhaskar/" target="_blank">jhajibhaskar</a>. All rights reserved.</p>
+    <p>© <span id="year"></span> Developed by <a href="https://www.linkedin.com/in/jhajibhaskar/" target="_blank" rel="noopener noreferrer">jhajibhaskar</a>. All rights reserved.</p>
   </footer>
 
   <a href="#top" class="top" aria-label="Scroll to top">↑</a>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="assets/js/config.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  <script src="../Donations/script.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
