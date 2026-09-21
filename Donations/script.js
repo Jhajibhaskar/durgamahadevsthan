@@ -312,40 +312,65 @@ async function callBackend(action, payload = {}) {
   const functionName = String(config?.donorFunctionName || DMS_FUNCTION_NAME);
 
   if (!supabaseUrl || !publishableKey || publishableKey.startsWith("YOUR_")) {
-    showAlert("Online donation backend is not configured. Update assets/js/config.js with your Supabase project URL and publishable key.", "error");
+    showAlert("Online donation backend is not configured. Update assets/js/config.js with your Supabase project URL and publishable/anon key.", "error");
     throw new Error("BACKEND_NOT_CONFIGURED");
   }
 
   const endpoint = `${supabaseUrl}/functions/v1/${functionName}`;
-
-  // Payment proofs are sent as JSON/base64 instead of multipart/form-data.
-  // This avoids mobile-browser multipart/CORS upload issues while keeping
-  // the existing Edge Function and database contract unchanged.
-  const requestBody = { action, ...payload };
-
   const response = await fetch(endpoint, {
     method: "POST",
     headers: {
       apikey: publishableKey,
+      Authorization: `Bearer ${publishableKey}`,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(requestBody)
+    body: JSON.stringify({ action, ...payload })
   });
 
   const responseText = await response.text();
   let result = null;
-
-  try {
-    result = responseText ? JSON.parse(responseText) : null;
-  } catch (_) {
-    throw new Error("Donation backend returned an invalid response.");
-  }
+  try { result = responseText ? JSON.parse(responseText) : null; }
+  catch (_) { throw new Error("Donation backend returned an invalid response."); }
 
   if (!response.ok || !result?.success) {
     throw new Error(result?.message || `Backend HTTP ${response.status}`);
   }
-
   return result.data;
+}
+
+async function prepareProofForUpload(file) {
+  if (!file) throw new Error("Please select a payment screenshot.");
+
+  const isImage =
+    file.type === "image/png" ||
+    file.type === "image/jpeg" ||
+    /\.(png|jpe?g)$/i.test(file.name);
+
+  if (!isImage) throw new Error("Please choose a JPG or PNG screenshot.");
+  if (file.size > 5 * 1024 * 1024) throw new Error("Screenshot must be 5 MB or smaller.");
+
+  const dataUrl = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result !== "string") {
+        reject(new Error("The selected image could not be read."));
+        return;
+      }
+      resolve(reader.result);
+    };
+    reader.onerror = () => reject(new Error("The selected image could not be read."));
+    reader.readAsDataURL(file);
+  });
+
+  if (!dataUrl.startsWith("data:image/")) {
+    throw new Error("The selected image could not be read.");
+  }
+
+  return {
+    fileName: file.name,
+    mimeType: file.type || (/\.png$/i.test(file.name) ? "image/png" : "image/jpeg"),
+    base64: dataUrl.split(",")[1]
+  };
 }
 
 /* ============================================================
@@ -576,21 +601,15 @@ document.getElementById("donation-app")?.addEventListener("change", (event) => {
 document.getElementById("donation-proof")?.addEventListener("change", (event) => {
   const file = event.target.files?.[0];
   const nameEl = document.getElementById("donation-proof-name");
-
   if (nameEl) nameEl.textContent = file ? file.name : "No file selected";
-  showAlert("");
 
   if (!file) return;
-
-  const allowed = !file.type || APP_CONFIG.allowedProofTypes.includes(file.type);
-
-  if (!allowed) {
+  if (!APP_CONFIG.allowedProofTypes.includes(file.type)) {
     showAlert("Please upload a JPG, JPEG or PNG payment screenshot.", "error");
     event.target.value = "";
     if (nameEl) nameEl.textContent = "No file selected";
     return;
   }
-
   if (file.size > APP_CONFIG.maxProofSizeBytes) {
     showAlert("Payment screenshot must be 5 MB or smaller.", "error");
     event.target.value = "";
@@ -598,118 +617,16 @@ document.getElementById("donation-proof")?.addEventListener("change", (event) =>
   }
 });
 
-function loadImageForProof(file) {
+function fileToBase64(file) {
   return new Promise((resolve, reject) => {
-    const objectUrl = URL.createObjectURL(file);
-    const image = new Image();
-
-    image.onload = () => {
-      URL.revokeObjectURL(objectUrl);
-      resolve(image);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = String(reader.result || "");
+      resolve(result.includes(",") ? result.split(",")[1] : result);
     };
-
-    image.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      reject(new Error("The selected image could not be read. Please choose a JPG or PNG screenshot."));
-    };
-
-    image.src = objectUrl;
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
   });
-}
-
-function canvasToBase64(canvas, quality = 0.82) {
-  return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => {
-      if (!blob) {
-        reject(new Error("Unable to prepare the payment screenshot."));
-        return;
-      }
-
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        const result = String(reader.result || "");
-        resolve({
-          base64: result.includes(",") ? result.split(",")[1] : result,
-          mimeType: "image/jpeg",
-          size: blob.size
-        });
-      };
-
-      reader.onerror = () => reject(new Error("Unable to prepare the payment screenshot."));
-      reader.readAsDataURL(blob);
-    }, "image/jpeg", quality);
-  });
-}
-
-async function prepareProofForUpload(file) {
-  if (!(file instanceof File)) {
-    throw new Error("Please select a payment screenshot.");
-  }
-
-  const allowedInputTypes = ["image/jpeg", "image/png"];
-
-  // Mobile browsers can sometimes provide an empty MIME type. The actual
-  // decode below is the final validation in that case.
-  if (file.type && !allowedInputTypes.includes(file.type)) {
-    throw new Error("Please upload a JPG, JPEG or PNG payment screenshot.");
-  }
-
-  const MAX_OUTPUT_BYTES = 2 * 1024 * 1024;
-  const MAX_DIMENSION = 1600;
-
-  const image = await loadImageForProof(file);
-
-  let width = image.naturalWidth || image.width;
-  let height = image.naturalHeight || image.height;
-
-  if (!width || !height) {
-    throw new Error("The selected image could not be read.");
-  }
-
-  const scale = Math.min(1, MAX_DIMENSION / Math.max(width, height));
-  width = Math.max(1, Math.round(width * scale));
-  height = Math.max(1, Math.round(height * scale));
-
-  const canvas = document.createElement("canvas");
-  canvas.width = width;
-  canvas.height = height;
-
-  const context = canvas.getContext("2d", { alpha: false });
-  if (!context) {
-    throw new Error("Your browser could not prepare the payment screenshot.");
-  }
-
-  context.fillStyle = "#ffffff";
-  context.fillRect(0, 0, width, height);
-  context.imageSmoothingEnabled = true;
-  context.imageSmoothingQuality = "high";
-  context.drawImage(image, 0, 0, width, height);
-
-  // Start with good quality, then reduce quality if the resulting JSON
-  // payload would otherwise be unnecessarily large for a mobile connection.
-  let quality = 0.82;
-  let prepared = await canvasToBase64(canvas, quality);
-
-  while (prepared.size > MAX_OUTPUT_BYTES && quality > 0.55) {
-    quality -= 0.07;
-    prepared = await canvasToBase64(canvas, quality);
-  }
-
-  if (prepared.size > MAX_OUTPUT_BYTES) {
-    throw new Error("The payment screenshot is too large. Please choose a smaller screenshot.");
-  }
-
-  const safeName = String(file.name || "payment-proof")
-    .replace(/\.[^.]+$/, "")
-    .replace(/[^a-zA-Z0-9_-]+/g, "-")
-    .replace(/^-+|-+$/g, "") || "payment-proof";
-
-  return {
-    fileName: `${safeName}.jpg`,
-    mimeType: "image/jpeg",
-    base64: prepared.base64
-  };
 }
 
 document.getElementById("donation-form")?.addEventListener("submit", async (event) => {
@@ -750,29 +667,19 @@ document.getElementById("donation-form")?.addEventListener("submit", async (even
     showAlert("Please upload the payment screenshot/proof.", "error");
     return;
   }
-  if (
-    (proof.type && !APP_CONFIG.allowedProofTypes.includes(proof.type)) ||
-    proof.size > APP_CONFIG.maxProofSizeBytes
-  ) {
+  if (!(proof.type === "image/png" || proof.type === "image/jpeg" || /\.(png|jpe?g)$/i.test(proof.name)) || proof.size > APP_CONFIG.maxProofSizeBytes) {
     showAlert("Please upload a JPG, JPEG or PNG file up to 5 MB.", "error");
     return;
   }
 
-  setButtonBusy(button, true, "Preparing...");
+  setButtonBusy(button, true, "Submitting...");
   try {
-    /*
-      Convert the selected screenshot to a resized JPEG before sending it.
-      This avoids multipart upload issues on mobile browsers and keeps the
-      JSON request small enough for normal mobile connections.
-    */
-    const preparedProof = await prepareProofForUpload(proof);
-
-    setButtonBusy(button, true, "Submitting...");
-
     /*
       The Edge Function decides the donation year from Asia/Kolkata time,
       so the browser never chooses the yearly partition.
     */
+    const preparedProof = await prepareProofForUpload(proof);
+
     const data = await callBackend("submitDonation", {
       mobile: currentDonor.mobile,
       token: donorSessionToken,
@@ -873,58 +780,8 @@ async function openReceipt(donation) {
   showView("receipt");
 }
 
-document.getElementById("download-receipt-btn")?.addEventListener("click", async () => {
-  const button = document.getElementById("download-receipt-btn");
-  const receipt = document.getElementById("receipt-card");
-
-  if (!receipt) {
-    showAlert("Receipt could not be found.", "error");
-    return;
-  }
-
-  if (typeof html2canvas === "undefined") {
-    showAlert("Receipt download is temporarily unavailable. Please refresh the page and try again.", "error");
-    return;
-  }
-
-  const originalText = button?.textContent;
-
-  try {
-    if (button) {
-      button.disabled = true;
-      button.textContent = "Preparing Receipt...";
-    }
-
-    if (document.fonts?.ready) {
-      await document.fonts.ready;
-    }
-
-    const canvas = await html2canvas(receipt, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: null,
-      logging: false
-    });
-
-    const link = document.createElement("a");
-    const year = currentDonation?.year || new Date().getFullYear();
-    const donationId = currentDonation?.donationId || "Receipt";
-
-    link.download = `Durga-Mahadev-Receipt-${year}-${donationId}.png`;
-    link.href = canvas.toDataURL("image/png");
-
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-  } catch (error) {
-    console.error("Receipt download failed:", error);
-    showAlert("Unable to download the receipt. Please try again.", "error");
-  } finally {
-    if (button) {
-      button.disabled = false;
-      button.textContent = originalText || "⬇ Download Receipt";
-    }
-  }
+document.getElementById("print-receipt-btn")?.addEventListener("click", () => {
+  window.print();
 });
 
 /* ---------- Protect against accidental form submission while offline ---------- */
