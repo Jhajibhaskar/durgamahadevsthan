@@ -344,33 +344,45 @@ async function prepareProofForUpload(file) {
   const isImage =
     file.type === "image/png" ||
     file.type === "image/jpeg" ||
-    /\.(png|jpe?g)$/i.test(file.name);
+    /\.(png|jpe?g)$/i.test(file.name || "");
 
   if (!isImage) throw new Error("Please choose a JPG or PNG screenshot.");
-  if (file.size > 5 * 1024 * 1024) throw new Error("Screenshot must be 5 MB or smaller.");
-
-  const dataUrl = await new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result !== "string") {
-        reject(new Error("The selected image could not be read."));
-        return;
-      }
-      resolve(reader.result);
-    };
-    reader.onerror = () => reject(new Error("The selected image could not be read."));
-    reader.readAsDataURL(file);
-  });
-
-  if (!dataUrl.startsWith("data:image/")) {
-    throw new Error("The selected image could not be read.");
+  if (file.size > 5 * 1024 * 1024) {
+    throw new Error("Screenshot must be 5 MB or smaller.");
+  }
+  if (typeof file.arrayBuffer !== "function") {
+    throw new Error("Your browser cannot read the selected image. Please use Chrome and try again.");
   }
 
-  return {
-    fileName: file.name,
-    mimeType: file.type || (/\.png$/i.test(file.name) ? "image/png" : "image/jpeg"),
-    base64: dataUrl.split(",")[1]
-  };
+  try {
+    // Use File.arrayBuffer() instead of FileReader. This is more reliable
+    // with images selected from the Android/iOS gallery in mobile Chrome.
+    const buffer = await file.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+    let binary = "";
+    const chunkSize = 0x8000;
+
+    for (let i = 0; i < bytes.length; i += chunkSize) {
+      binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+    }
+
+    const base64 = btoa(binary);
+    if (!base64) throw new Error("The selected image could not be read.");
+
+    const mimeType =
+      file.type === "image/png" || /\.png$/i.test(file.name || "")
+        ? "image/png"
+        : "image/jpeg";
+
+    return {
+      fileName: file.name || `payment-proof.${mimeType === "image/png" ? "png" : "jpg"}`,
+      mimeType,
+      base64
+    };
+  } catch (error) {
+    if (error?.message === "The selected image could not be read.") throw error;
+    throw new Error("The selected image could not be read. Please choose the image again.");
+  }
 }
 
 /* ============================================================
