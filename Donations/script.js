@@ -338,49 +338,77 @@ async function callBackend(action, payload = {}) {
   return result.data;
 }
 
+function detectProofMime(bytes) {
+  // PNG signature: 89 50 4E 47 0D 0A 1A 0A
+  if (bytes.length >= 8 &&
+      bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4E && bytes[3] === 0x47 &&
+      bytes[4] === 0x0D && bytes[5] === 0x0A && bytes[6] === 0x1A && bytes[7] === 0x0A) {
+    return "image/png";
+  }
+
+  // JPEG signature: FF D8 FF
+  if (bytes.length >= 3 && bytes[0] === 0xFF && bytes[1] === 0xD8 && bytes[2] === 0xFF) {
+    return "image/jpeg";
+  }
+
+  return "";
+}
+
+function bytesToBase64(bytes) {
+  // Encode in small chunks. Do not use:
+  // String.fromCharCode(...bytes) on the whole array because mobile
+  // browsers can throw a call-stack/argument-limit error for large images.
+  const chunkSize = 8184; // divisible by 3, so chunk boundaries stay valid for Base64.
+  let result = "";
+
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    const chunk = bytes.subarray(i, Math.min(i + chunkSize, bytes.length));
+    let binary = "";
+
+    for (let j = 0; j < chunk.length; j++) {
+      binary += String.fromCharCode(chunk[j]);
+    }
+
+    result += btoa(binary);
+  }
+
+  return result;
+}
+
 async function prepareProofForUpload(file) {
   if (!file) throw new Error("Please select a payment screenshot.");
 
-  const isImage =
-    file.type === "image/png" ||
-    file.type === "image/jpeg" ||
-    /\.(png|jpe?g)$/i.test(file.name || "");
-
-  if (!isImage) throw new Error("Please choose a JPG or PNG screenshot.");
-  if (file.size > 5 * 1024 * 1024) {
+  if (file.size > APP_CONFIG.maxProofSizeBytes) {
     throw new Error("Screenshot must be 5 MB or smaller.");
-  }
-  if (typeof file.arrayBuffer !== "function") {
-    throw new Error("Your browser cannot read the selected image. Please use Chrome and try again.");
   }
 
   try {
-    // Use File.arrayBuffer() instead of FileReader. This is more reliable
-    // with images selected from the Android/iOS gallery in mobile Chrome.
-    const buffer = await file.arrayBuffer();
-    const bytes = new Uint8Array(buffer);
-    let binary = "";
-    const chunkSize = 0x8000;
+    // Read the actual file bytes. This reads the raw file bytes and also works when
+    // Android/iOS returns an unexpected or empty MIME type for a gallery file.
+    const buffer = typeof file.arrayBuffer === "function"
+      ? await file.arrayBuffer()
+      : await new Response(file).arrayBuffer();
 
-    for (let i = 0; i < bytes.length; i += chunkSize) {
-      binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+    const bytes = new Uint8Array(buffer);
+    const detectedMime = detectProofMime(bytes);
+
+    if (!detectedMime) {
+      throw new Error("Please choose a JPG or PNG screenshot.");
     }
 
-    const base64 = btoa(binary);
-    if (!base64) throw new Error("The selected image could not be read.");
-
-    const mimeType =
-      file.type === "image/png" || /\.png$/i.test(file.name || "")
-        ? "image/png"
-        : "image/jpeg";
+    const base64 = bytesToBase64(bytes);
+    if (!base64) {
+      throw new Error("The selected image could not be read.");
+    }
 
     return {
-      fileName: file.name || `payment-proof.${mimeType === "image/png" ? "png" : "jpg"}`,
-      mimeType,
+      fileName: file.name || `payment-proof.${detectedMime === "image/png" ? "png" : "jpg"}`,
+      mimeType: detectedMime,
       base64
     };
   } catch (error) {
-    if (error?.message === "The selected image could not be read.") throw error;
+    if (error?.message === "Please choose a JPG or PNG screenshot.") throw error;
+    if (error?.message === "Screenshot must be 5 MB or smaller.") throw error;
     throw new Error("The selected image could not be read. Please choose the image again.");
   }
 }
@@ -616,7 +644,11 @@ document.getElementById("donation-proof")?.addEventListener("change", (event) =>
   if (nameEl) nameEl.textContent = file ? file.name : "No file selected";
 
   if (!file) return;
-  if (!APP_CONFIG.allowedProofTypes.includes(file.type)) {
+  const isImage =
+    APP_CONFIG.allowedProofTypes.includes(file.type) ||
+    /\.(png|jpe?g)$/i.test(file.name || "");
+
+  if (!isImage) {
     showAlert("Please upload a JPG, JPEG or PNG payment screenshot.", "error");
     event.target.value = "";
     if (nameEl) nameEl.textContent = "No file selected";
@@ -628,18 +660,6 @@ document.getElementById("donation-proof")?.addEventListener("change", (event) =>
     if (nameEl) nameEl.textContent = "No file selected";
   }
 });
-
-function fileToBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = String(reader.result || "");
-      resolve(result.includes(",") ? result.split(",")[1] : result);
-    };
-    reader.onerror = reject;
-    reader.readAsDataURL(file);
-  });
-}
 
 document.getElementById("donation-form")?.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -792,8 +812,44 @@ async function openReceipt(donation) {
   showView("receipt");
 }
 
-document.getElementById("print-receipt-btn")?.addEventListener("click", () => {
-  window.print();
+document.getElementById("download-receipt-btn")?.addEventListener("click", async () => {
+  const card = document.getElementById("receipt-card");
+  if (!card) return;
+
+  if (typeof window.html2canvas !== "function") {
+    showAlert("Receipt download is temporarily unavailable. Please try again.", "error");
+    return;
+  }
+
+  const button = document.getElementById("download-receipt-btn");
+  const originalText = button?.textContent || "⬇ Download Receipt";
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Preparing...";
+  }
+
+  try {
+    const canvas = await window.html2canvas(card, {
+      scale: Math.min(window.devicePixelRatio || 1, 2),
+      useCORS: true,
+      backgroundColor: "#ffffff"
+    });
+
+    const link = document.createElement("a");
+    link.download = `Durga-Mahadev-Sthan-Receipt-${currentDonation?.donationId || "receipt"}.png`;
+    link.href = canvas.toDataURL("image/png");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch (error) {
+    console.error("Receipt download failed:", error);
+    showAlert("Unable to create the receipt image. Please try again.", "error");
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = originalText;
+    }
+  }
 });
 
 /* ---------- Protect against accidental form submission while offline ---------- */
